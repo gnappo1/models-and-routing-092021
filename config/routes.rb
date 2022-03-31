@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # get "/posts/:id", to: "posts#show"
   # post "/posts", to: "posts#create"
   # patch "/posts/:id", to: "posts#update"
+  # put "/posts/:id", to: "posts#update"
   # delete "/posts/:id", to: "posts#destroy"
   get "/ordered-posts", to: "posts#ordered"
   # "/posts/:id/comments"
