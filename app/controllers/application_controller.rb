@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
     private
 
     def no_route
-        render json: {error: "Couldn't find a resource with id #{params[:id]}"}
+        render json: {error: "Couldn't find a resource with id #{params[:id]}"}.to_json
     end
 
 end

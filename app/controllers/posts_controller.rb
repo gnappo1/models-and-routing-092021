@@ -15,7 +15,7 @@ class PostsController < ApplicationController
 
     def create #post "/posts"
         @post = Post.create(post_params)
-        if @post 
+        if @post.id
             render json: serialized_post, status: 201
         else
             render json: {error: @post.errors.full_messages.to_sentence}

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
     before_action :find_comment, only: [:show, :update, :destroy]
 
-    def index #get "/comments"
+    def index #get "/comments" get "posts/:post_id/comments"
         if params[:post_id] #is there a route parameter?
             post = Post.find(params[:post_id])
             render json: post.comments
@@ -13,11 +13,14 @@ class CommentsController < ApplicationController
     end
 
     def create #post "/comments"
-        @comment = Comment.create(comment_params)
-        if @comment 
-            render json: serialized_comment
-        else
-            render json: {error: @comment.errors.full_messages.to_sentence}
+        if params[:post_id] #is there a route parameter?
+            post = Post.find(params[:post_id])
+            @comment = post.comments.create(comment_params)
+            if @comment.id
+                render json: serialized_comment, status: 201
+            else
+                render json: {error: @comment.errors.full_messages.to_sentence}, status: 404
+            end
         end
     end
 
