@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_24_223649) do
+ActiveRecord::Schema.define(version: 2022_04_07_231300) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "post_id", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2022_03_24_223649) do
     t.string "media_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "delete_time"
   end
 
   add_foreign_key "comments", "posts", on_delete: :cascade

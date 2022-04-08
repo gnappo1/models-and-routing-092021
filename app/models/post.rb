@@ -1,7 +1,8 @@
 class Post < ApplicationRecord
     has_many :comments # 17 methods comments, comments= 
-    validates :title, :content, presence: true
+    validates :title, :content, :delete_time, presence: true
     validates :content, length: {in: (10..500)}
+    validate :delete_time_in_the_future?
     before_save :format_title
     scope :most_comments, -> {self.joins(:comments).group(:post_id).order("COUNT(posts.id) DESC").limit(1)}
     scope :sort_desc_by_title, -> {self.order(title: :desc)}
@@ -12,10 +13,17 @@ class Post < ApplicationRecord
       end
     end
 
-    # def self.most_comments
-    #     # self.preload(:comments).all.max_by{|p| p.comments.length}
-    #     self.joins(:comments).group(:post_id).order("COUNT(posts.id) DESC").limit(1)
-    # end
+    def delete_time_in_the_future?
+      if !!self.delete_time && self.delete_time <= DateTime.current
+        self.errors.add(:delete_time, :time_warp, message: "The delete time should be in the future!!!")
+      end
+    end
+
+    def automatic_destroyal
+      if self.delete_time <= DateTime.current
+        self.destroy
+      end
+    end
 
 
 end

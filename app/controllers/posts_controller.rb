@@ -14,20 +14,20 @@ class PostsController < ApplicationController
     end
 
     def create #post "/posts"
-        @post = Post.create(post_params)
-        if @post.id
-            render json: serialized_post, status: 201
-        else
-            render json: {error: @post.errors.full_messages.to_sentence}
-        end
+        @post = Post.create!(post_params)
+        # if @post.id
+        render json: serialized_post, status: 201
+        # else
+            # render json: {error: @post.errors.full_messages.to_sentence}
+        # end
     end
 
     def update #patch "/posts/:id"
-        if @post&.update(post_params) 
-            render json: serialized_post
-        else
-            render json: {error: @post.errors.full_messages.to_sentence}
-        end
+        @post&.update!(post_params) 
+        render json: serialized_post
+        # else
+        #     render json: {error: @post.errors.full_messages.to_sentence}
+        # end
     end
 
     def destroy #delete "/posts/:id"
