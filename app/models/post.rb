@@ -4,9 +4,11 @@ class Post < ApplicationRecord
     validates :content, length: {in: (10..500)}
     validate :delete_time_in_the_future?
     before_save :format_title
+
     scope :most_comments, -> {self.joins(:comments).group(:post_id).order("COUNT(posts.id) DESC").limit(1)}
     scope :sort_desc_by_title, -> {self.order(title: :desc)}
-
+    scope :top_five_title_desc, -> {self.sort_desc_by_title.limit(5)}
+    
     def format_title
       if self.title[0] != self.title[0].upcase
         self.title = self.title.capitalize

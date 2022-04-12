@@ -23,7 +23,8 @@ class PostsController < ApplicationController
     end
 
     def update #patch "/posts/:id"
-        @post&.update!(post_params) 
+
+        @post&.update!(post_params)
         render json: serialized_post
         # else
         #     render json: {error: @post.errors.full_messages.to_sentence}
@@ -49,6 +50,6 @@ class PostsController < ApplicationController
     end
 
     def post_params
-        params.require(:post).permit(:title, :content, :media_url)
+        params.require(:post).permit(:title, :content, :media_url, :delete_time)
     end
 end

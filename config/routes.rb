@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   # put "/posts/:id", to: "posts#update"
   # delete "/posts/:id", to: "posts#destroy"
   get "/ordered-posts", to: "posts#ordered"
+  # get "/comments", to: "comments#index"
+  resources :comments, only: [:index]
   # "/posts/:id/comments"
   resources :posts do
     # resources :comments, only: [:index, :create]
     resources :comments, shallow: true
   end
-  # resources :comments, only: [:show, :update, :destroy]
 end

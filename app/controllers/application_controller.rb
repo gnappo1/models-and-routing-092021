@@ -5,7 +5,6 @@ class ApplicationController < ActionController::API
     private
 
     def invalid_record(invalid)
-        binding.pry
         render json: {error: invalid.record.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
 

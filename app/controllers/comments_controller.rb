@@ -2,9 +2,11 @@ class CommentsController < ApplicationController
     before_action :find_comment, only: [:show, :update, :destroy]
 
     def index #get "/comments" get "posts/:post_id/comments"
-        if params[:post_id] #is there a route parameter?
+        if params[:post_id] #is there a route parameter? AKA do I come from a nested route?
             post = Post.find(params[:post_id])
             render json: post.comments
+        else # get "/comments"
+            render json: Comment.all.to_json(include: :post)
         end
     end
 
@@ -12,15 +14,15 @@ class CommentsController < ApplicationController
         render json: serialized_comment
     end
 
-    def create #post "/comments"
+    def create #post "/comments" #post "posts/:post_id/comments"
         if params[:post_id] #is there a route parameter?
             post = Post.find(params[:post_id])
-            @comment = post.comments.create(comment_params)
-            if @comment.id
-                render json: serialized_comment, status: 201
-            else
-                render json: {error: @comment.errors.full_messages.to_sentence}, status: 404
-            end
+            @comment = post.comments.create!(comment_params)
+            # if @comment.id
+            render json: serialized_comment, status: 201
+            # else
+                # render json: {error: @comment.errors.full_messages.to_sentence}, status: 404
+            # end
         end
     end
 
