@@ -96,7 +96,7 @@ GEM
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.15.0)
+    loofah (2.16.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -106,15 +106,18 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.15.0)
-    msgpack (1.4.5)
+    msgpack (1.5.1)
     nio4r (2.5.8)
-    nokogiri (1.13.3)
+    nokogiri (1.13.4)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    nokogiri (1.13.4-x86_64-darwin)
+      racc (~> 1.4)
+    pg (1.3.5)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    puma (5.6.2)
+    puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
@@ -160,7 +163,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.2.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -172,6 +174,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-darwin-19
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
@@ -182,12 +185,12 @@ DEPENDENCIES
   bullet
   jsonapi-serializer
   listen (~> 3.3)
+  pg
   pry
   puma (~> 5.0)
   rack-cors
   rails (~> 6.1.5)
   spring
-  sqlite3 (~> 1.4)
   tzinfo-data
 
 RUBY VERSION
