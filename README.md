@@ -15,8 +15,8 @@ Agenda for 4/19/22
 
 ## Scoping routes
 
--[scope & namespace](https://guides.rubyonrails.org/routing.html#controller-namespaces-and-routing)
--[scope VS namespace](https://skyxu.me/2021/02/11/rails-nested-routes-scope-vs-namespace/)
+- [scope & namespace](https://guides.rubyonrails.org/routing.html#controller-namespaces-and-routing)
+- [scope VS namespace](https://skyxu.me/2021/02/11/rails-nested-routes-scope-vs-namespace/)
 
 ## N+1 queries & siz vs count vs length
 
