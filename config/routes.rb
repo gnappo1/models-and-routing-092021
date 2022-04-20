@@ -6,12 +6,20 @@ Rails.application.routes.draw do
   # patch "/posts/:id", to: "posts#update"
   # put "/posts/:id", to: "posts#update"
   # delete "/posts/:id", to: "posts#destroy"
-  get "/ordered-posts", to: "posts#ordered"
-  # get "/comments", to: "comments#index"
-  resources :comments, only: [:index]
-  # "/posts/:id/comments"
-  resources :posts do
-    # resources :comments, only: [:index, :create]
-    resources :comments, shallow: true
+  scope :api do
+    scope :v1 do
+      get "/ordered-posts", to: "posts#ordered"
+      get "/most-comments", to: "posts#most_comments"
+
+      # get "/comments", to: "comments#index"
+      resources :comments, only: [:index]
+      # "/posts/:id/comments"
+      resources :posts do
+        # resources :comments, only: [:index, :create]
+        resources :comments, shallow: true
+      end
+    end
   end
+
+  
 end

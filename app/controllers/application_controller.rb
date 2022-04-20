@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+    # include ActionController::Serialization
     rescue_from ActiveRecord::RecordNotFound, with: :no_route
     rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
 

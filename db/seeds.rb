@@ -5,8 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-p1 = Post.create(title: "Learning models all over again!", content: "Is there anything really new though??")
-p2 = Post.create(title: "Learning routing in a different way!", content: "Routing is completely different in Rails!")
+p1 = Post.create(title: "Learning models all over again!", content: "Is there anything really new though??", delete_time: DateTime.tomorrow)
+p2 = Post.create(title: "Learning routing in a different way!", content: "Routing is completely different in Rails!", delete_time: DateTime.tomorrow)
 
 # Comment.create(rating: 1, content: "What a boring topic!!!", post: p1)
 p1.comments.create(rating: 1, content: "What a boring topic!!!")

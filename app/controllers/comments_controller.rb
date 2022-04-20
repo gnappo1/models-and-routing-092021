@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
             post = Post.find(params[:post_id])
             render json: post.comments
         else # get "/comments"
-            render json: Comment.all.to_json(include: :post)
+            render json: CommentSerializer.new(Comment.all).serializable_hash
         end
     end
 

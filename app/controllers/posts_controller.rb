@@ -2,11 +2,15 @@ class PostsController < ApplicationController
     before_action :find_post, only: [:show, :update, :destroy]
 
     def index #get "/posts"
-        render json: Post.all
+        render json: PostSerializer.new(Post.all).serializable_hash
     end
 
     def ordered
         render json: Post.sort_desc_by_title
+    end
+
+    def most_comments
+        render json: Post.most_comments
     end
 
     def show #get "/posts/:id"
