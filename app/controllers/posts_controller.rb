@@ -2,7 +2,7 @@ class PostsController < ApplicationController
     before_action :find_post, only: [:show, :update, :destroy]
 
     def index #get "/posts"
-        render json: PostSerializer.new(Post.all).serializable_hash
+        render json: PostSerializer.new(Post.preload(:comments)).serializable_hash
     end
 
     def ordered
