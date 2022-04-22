@@ -10,7 +10,13 @@ Rails.application.routes.draw do
     scope :v1 do
       get "/ordered-posts", to: "posts#ordered"
       get "/most-comments", to: "posts#most_comments"
-
+      
+      resources :users, only: [:update, :destroy]
+      post "/signup", to: "users#create" 
+      get "/me", to: "users#show"
+      post "/login", to: "sessions#create"
+      delete "/logout", to: "sessions#destroy"
+      
       # get "/comments", to: "comments#index"
       resources :comments, only: [:index]
       # "/posts/:id/comments"
