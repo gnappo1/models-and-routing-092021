@@ -2,7 +2,8 @@ class PostsController < ApplicationController
     before_action :find_post, only: [:show, :update, :destroy]
 
     def index #get "/posts"
-        render json: PostSerializer.new(Post.preload(:comments)).serializable_hash
+        binding.pry
+        render json: PostSerializer.new(current_user.comments).serializable_hash
     end
 
     def ordered
@@ -14,7 +15,11 @@ class PostsController < ApplicationController
     end
 
     def show #get "/posts/:id"
-        render json: serialized_post
+        if current_user.posts.include?(@post)
+            render json: serialized_post
+        else
+            no_route
+        end
     end
 
     def create #post "/posts"

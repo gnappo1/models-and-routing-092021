@@ -3,17 +3,26 @@ class ApplicationController < ActionController::API
     include ActionController::Cookies
     rescue_from ActiveRecord::RecordNotFound, with: :no_route
     rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
-
-    # wrap_parameters format: [] related to strong params and its ability to build a nested object in params
+    before_action :authenticate!
+    wrap_parameters format: [] #related to strong params and its ability to build a nested object in params
 
     private
+
+    def current_user
+        @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    end
+
+    def authenticate!
+        binding.pry
+        no_route unless current_user
+    end
 
     def invalid_record(invalid)
         render json: {error: invalid.record.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
 
     def no_route
-        render json: {error: "Couldn't find a resource with id #{params[:id]}"}.to_json
+        render json: {error: "Unauthorized!"}, status: :forbidden
     end
 
 end

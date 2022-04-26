@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # patch "/posts/:id", to: "posts#update"
   # put "/posts/:id", to: "posts#update"
   # delete "/posts/:id", to: "posts#destroy"
+  get '/auth/:provider/callback', to: "sessions#omniauth"
   scope :api do
     scope :v1 do
       get "/ordered-posts", to: "posts#ordered"
@@ -16,7 +17,7 @@ Rails.application.routes.draw do
       get "/me", to: "users#show"
       post "/login", to: "sessions#create"
       delete "/logout", to: "sessions#destroy"
-      
+
       # get "/comments", to: "comments#index"
       resources :comments, only: [:index]
       # "/posts/:id/comments"
