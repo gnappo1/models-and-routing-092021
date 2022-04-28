@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     scope :v1 do
       get "/ordered-posts", to: "posts#ordered"
       get "/most-comments", to: "posts#most_comments"
-      
+      get "/auth/:provider/callback", to: "users#from_omniauth"
       resources :users, only: [:update, :destroy]
       post "/signup", to: "users#create" 
       get "/me", to: "users#show"
