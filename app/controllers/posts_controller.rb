@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
+    skip_before_action :authorized!, only: [:index]
     before_action :find_post, only: [:show, :update, :destroy]
 
     def index #get "/posts"
         binding.pry
-        render json: PostSerializer.new(current_user.posts).serializable_hash
+        render json: PostSerializer.new(Post.preload(:comments)).serializable_hash
     end
 
     def ordered
@@ -18,8 +19,8 @@ class PostsController < ApplicationController
         render json: serialized_post
     end
 
-    def create #post "/posts"
-        @post = Post.create!(post_params)
+    def create #post "/posts" "users/17/posts" "users/99/posts"
+        @post = current_user.posts.create!(post_params)
         # if @post.id
         render json: serialized_post, status: 201
         # else
@@ -28,19 +29,26 @@ class PostsController < ApplicationController
     end
 
     def update #patch "/posts/:id"
-
-        @post&.update!(post_params)
-        render json: serialized_post
+        if current_user.posts.include?(@post)
+            @post&.update!(post_params)
+            render json: serialized_post
+        else
+            no_route
+        end
         # else
         #     render json: {error: @post.errors.full_messages.to_sentence}
         # end
     end
 
     def destroy #delete "/posts/:id"
-        if @post&.destroy
-            render json: {message: "Successfully destroyed post!"}
+        if current_user.posts.include?(@post)
+            if @post&.destroy
+                render json: {message: "Successfully destroyed post!"}
+            else
+                render json: {error: @post.errors.full_messages.to_sentence}
+            end
         else
-            render json: {error: @post.errors.full_messages.to_sentence}
+            no_route
         end
     end
 
