@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-    skip_before_action :authorized!, only: [:create]
+    skip_before_action :authorized!, only: [:create, :omniauth]
 
     def create
         user = User.find_by_email(params[:email])
@@ -12,14 +12,13 @@ class SessionsController < ApplicationController
     end
 
     def omniauth
-        # use byebug to inspect what the auth method returns
-        binding.pry
-        @user = User.from_omniauth(auth)
-        if @user.valid?
-          session[:user_id] = @user.id
-          render json: UserSerializer.new(@user), status: :created
+        auth = {username: params["Lu"]["tf"], email: params["Lu"]["Bv"], uid: params["profileObj"]["googleId"], provider: params["provider"]}
+        user = User.from_omniauth(auth)
+        if user.id
+          session[:user_id] = user.id
+          render json: UserSerializer.new(user), status: :created
         else
-          render json: {error: @user.errors.full_messages.to_sentence}, status: :unauthorized
+          render json: {error: user.errors.full_messages.to_sentence}, status: :unauthorized
         end
     end
 
